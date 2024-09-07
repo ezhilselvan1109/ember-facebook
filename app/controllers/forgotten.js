@@ -24,7 +24,7 @@ export default class ForgottenController extends Controller {
     event.preventDefault();
     if (!this.validateForm()) {
       return;
-    }    
+    }
     this.isLoading = true;
     try {
       let response = await fetch(

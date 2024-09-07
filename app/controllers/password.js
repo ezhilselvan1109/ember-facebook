@@ -40,7 +40,8 @@ export default class PasswordController extends Controller {
         throw new Error(`${errorData.message}. ${errorData.data.join(', ')}`);
       } else {
         let result = await response.json();
-        console.log('Result : ', result);this.router.transitionTo('login');
+        console.log('Result : ', result);
+        this.router.transitionTo('login');
       }
     } catch (error) {
       this.errorMessage = error;

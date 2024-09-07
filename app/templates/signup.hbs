@@ -1,0 +1,64 @@
+<div class="container">
+  <div>
+    <div class="d-flex align-items-center justify-content-center">
+      <img style="width: 20%;" src="https://static.xx.fbcdn.net/rsrc.php/y1/r/4lCu2zih0ca.svg" alt="Facebook">
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-5">
+        <div class="shadow mb-5 bg-white rounded">
+          <div class="p-3 d-flex flex-column align-items-center justify-content-center">
+            <h3>Create a new account</h3>
+            <p style="margin-bottom: 0;">It's quick and easy.</p>
+          </div>
+          <hr style="margin: 0;">
+          {{#if this.errorMessage}}
+          <div class="p-1 d-flex flex-column align-items-center justify-content-center">
+            <p style="margin-bottom: 0;color:red;">{{this.errorMessage}}</p>
+          </div>
+          {{/if}}
+          <form class="d-flex flex-column gap-3 p-4" {{on "submit" this.signUpUser}}>
+            <div class="d-flex gap-3">
+              <div class="form-group">
+                <input type="text" class="form-control form-control-md" placeholder="First Name" {{on "input"
+                  this.updateFirstName}} required>
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control form-control-md" placeholder="Last Name" {{on "input"
+                  this.updateLastName}} required>
+              </div>
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control form-control-md" placeholder="Phone Number" {{on "input"
+                this.updatePhoneNumber}} required>
+            </div>
+            <div class="form-group">
+              <input type="email" class="form-control form-control-md" placeholder="Email" {{on "input"
+                this.updateEmail}} required>
+            </div>
+            <div class="form-group">
+              <input type="password" class="form-control form-control-md" placeholder="New Password"
+                autocomplete="new-password" {{on "input" this.updatePassword}} required>
+            </div>
+            <div class="form-group">
+              <label class="form-check-label" for="gridCheck">
+                DOB
+              </label>
+              <input type="date" class="form-control form-control-md" {{on "input" this.updateDateOfBirth}} required>
+            </div>
+            <button class="btn btn-success btn-md btn-block" type="submit" disabled={{this.isLoading}}>
+              {{#if this.isLoading}}
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...
+              {{else}}
+                Sign Up
+              {{/if}}
+            </button>
+          </form>
+          <div class="pb-3 d-flex flex-column align-items-center justify-content-center">
+            <LinkTo @route="login" class="text-decoration-none">Already have an account?</LinkTo>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{{outlet}}
