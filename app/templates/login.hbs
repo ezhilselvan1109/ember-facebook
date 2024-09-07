@@ -1,0 +1,41 @@
+<div class="container d-flex align-items-center justify-content-center vh-100">
+    <div class="d-flex justify-content-evenly col-md-12">
+        <div class="row col-md-6 ">
+            <div class="d-flex flex-row align-items-center justify-content-center">
+                <img style="width: 50%;" src="https://static.xx.fbcdn.net/rsrc.php/y1/r/4lCu2zih0ca.svg" alt="Facebook">
+            </div>
+            <h4 class="px-5 text-center">Facebook helps you connect and share with the people in your life.</h4>
+        </div>
+        <div class="col-md-4">
+            <div class="shadow bg-white rounded">
+                <div class="pt-3 px-3 d-flex flex-column align-items-center justify-content-center">
+                    <h5>Log in to Facebook</h5>
+                </div>
+                <form {{on "submit" this.loginUser}} class="d-flex flex-column gap-3 p-3">
+                    <div class="form-group">
+                        <input type="text" value={{this.userName}} {{on "input" this.updateEmail}}
+                            class="form-control form-control-md" placeholder="Email or Phone number" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" value={{this.password}} {{on "input" this.updatePassword}}
+                            class="form-control form-control-md" placeholder="Password" required>
+                    </div>
+                    <button class="btn btn-primary btn-md btn-block" disabled={{this.isLoading}} type="submit">
+
+                        {{#if this.isLoading}}
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Loading...
+                        {{else}}
+                        Log in
+                        {{/if}}
+                    </button>
+                </form>
+                <div class="pb-3 d-flex flex-row align-items-center justify-content-center gap-2">
+                    <LinkTo @route="forgotten" class="text-decoration-none">Forgotten account?</LinkTo>
+                    <LinkTo @route="signup" class="text-decoration-none">Sign up for Facebook</LinkTo>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{outlet}}
