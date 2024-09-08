@@ -36,15 +36,11 @@ export default class PasswordController extends Controller {
 
       if (!response.ok) {
         const errorData = await response.json();
-        console.log('response:', errorData);
-        throw new Error(`${errorData.message}. ${errorData.data.join(', ')}`);
+        this.errorMessage = errorData.data.join(', ');
       } else {
-        let result = await response.json();
-        console.log('Result : ', result);
         this.router.transitionTo('login');
       }
     } catch (error) {
-      this.errorMessage = error;
       console.log('Error : ' + error);
     } finally {
       this.isLoading = false;

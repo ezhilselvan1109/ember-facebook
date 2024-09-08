@@ -1,16 +1,18 @@
 import Controller from '@ember/controller';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
+import { inject as service } from '@ember/service';
 
 export default class LoginController extends Controller {
-  @tracked userName = '';
+  @service router;
+  @tracked username = '';
   @tracked password = '';
   @tracked errorMessage = '';
   @tracked isLoading = false;
 
   @action
   updateEmail(event) {
-    this.userName = event.target.value;
+    this.username = event.target.value;
   }
 
   @action
@@ -19,10 +21,6 @@ export default class LoginController extends Controller {
   }
 
   validateForm() {
-    if (!this.userName || !this.password) {
-      this.errorMessage = 'Both email and password are required';
-      return false;
-    }
     this.errorMessage = '';
     return true;
   }
@@ -35,28 +33,22 @@ export default class LoginController extends Controller {
       return;
     }
     this.isLoading = true;
-    const loginData = {
-      email: this.userName,
-      password: this.password,
-    };
     try {
       let response = await fetch(
-        `http://localhost:8080/facebook/api/auth/login?userName=${this.userName}&password=${this.password}`,
+        `http://localhost:8080/facebook/api/auth/login?username=${this.username}&password=${this.password}`,
         {
           method: 'GET',
         },
       );
 
       if (!response.ok) {
-        const errorData = await response.json(); // Parse the JSON response
-        console.log('response:', errorData); // Log the actual error message
-        throw new Error(`${errorData.message}. ${errorData.data.join(', ')}`);
+        const errorData = await response.json();
+        this.errorMessage = errorData.data.join(', ');
+      }else{
+        localStorage.setItem('username', this.username);
+        this.router.transitionTo('index');
       }
-      let result = await response.json();
-      console.log('Result : ', result);
-      alert(`Login successful! Welcome, ${result}`);
     } catch (error) {
-      this.errorMessage = error;
       console.log('Error : ' + error);
     } finally {
       this.isLoading = false;

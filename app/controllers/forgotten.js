@@ -5,13 +5,13 @@ import { inject as service } from '@ember/service';
 
 export default class ForgottenController extends Controller {
   @service router;
-  @tracked userId = '';
+  @tracked username = '';
   @tracked errorMessage = '';
   @tracked isLoading = false;
 
   @action
   updateUserId(event) {
-    this.userId = event.target.value;
+    this.username = event.target.value;
   }
 
   validateForm() {
@@ -28,7 +28,7 @@ export default class ForgottenController extends Controller {
     this.isLoading = true;
     try {
       let response = await fetch(
-        `http://localhost:8080/facebook/api/auth/forgotPassword?userId=${this.userId}`,
+        `http://localhost:8080/facebook/api/auth/forgotPassword?username=${this.username}`,
         {
           method: 'GET',
         },
@@ -36,8 +36,7 @@ export default class ForgottenController extends Controller {
 
       if (!response.ok) {
         const errorData = await response.json();
-        console.log('response:', errorData);
-        throw new Error(`${errorData.message}. ${errorData.data.join(', ')}`);
+        this.errorMessage = errorData.data.join(', ');
       } else {
         let result = await response.json();
         this.router.transitionTo('password', result.data.id);

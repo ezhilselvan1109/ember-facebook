@@ -79,21 +79,11 @@ export default class SignupController extends Controller {
 
       if (!response.ok) {
         const errorData = await response.json();
-        console.log(
-          'response:',
-          errorData +
-            ' Error Message : ' +
-            errorData.data.join(', ') +
-            ' myError : ',
-          this.errorMessage,
-        );
         this.errorMessage = errorData.data.join(', ');
-        throw new Error(`${errorData.message}. ${errorData.data.join(', ')}`);
       } else {
         this.router.transitionTo('login');
       }
     } catch (error) {
-      this.errorMessage = error.message;
       console.log('Error : ' + error);
     } finally {
       this.isLoading = false;
