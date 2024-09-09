@@ -12,4 +12,5 @@ Router.map(function () {
   this.route('forgotten');
   this.route('password', { path: '/password/:id' });
   this.route('signup');
+  this.route('account');
 });

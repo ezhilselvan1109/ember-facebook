@@ -44,7 +44,7 @@ export default class LoginController extends Controller {
       if (!response.ok) {
         const errorData = await response.json();
         this.errorMessage = errorData.data.join(', ');
-      }else{
+      } else {
         localStorage.setItem('username', this.username);
         this.router.transitionTo('index');
       }
