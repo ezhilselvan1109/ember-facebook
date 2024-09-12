@@ -5,9 +5,16 @@
     </button>
     {{else if (eq this.isFriend false)}}
     {{#if this.status}}
-    <button class="btn  btn-success" type="button" disabled={{this.isLoading}} {{on "click" this.accept}}>
-        <i class="bi bi-person-plus-fill"></i> Add Friend
-    </button>
+    <div class="d-flex gap-2">
+        <button class="btn  btn-success" type="button" disabled={{this.isLoading}} {{on "click" this.accept}}>
+            <i class="bi bi-person-plus-fill"></i> Add Friend
+        </button>
+        <button class="btn  btn-secondary" type="button" disabled={{this.isLoading}} {{on "click"
+            this.reject}}>
+        <i class="bi bi-person-dash-fill"></i> Reject
+        </button>
+    </div>
+
     {{else}}
     <button class="btn  btn-secondary" type="button" disabled={{this.isLoading}} {{on "click" this.reject}}>
         <i class="bi bi-person-plus-fill"></i> Requested
