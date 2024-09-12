@@ -14,14 +14,15 @@
                     {{/unless}}
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    {{#if this.isSubmited}}
-                    <div class="d-flex flex-column justify-content-center align-item-center">
-                        <h5>Post is Created</h5>
-                        <button type="button" class="btn btn-success btn-md btn-block" data-bs-dismiss="modal" aria-label="Close">Ok</button>
-                    </div>
-                    {{else}}
-                    <form {{on "submit" this.handleSubmit}}>
+                <form {{on "submit" this.handleSubmit}}>
+                    <div class="modal-body">
+                        {{#if this.isSubmited}}
+                        <div class="d-flex flex-column justify-content-center align-item-center">
+                            <h5>Post is Created</h5>
+                            <button type="button" class="btn btn-success btn-md btn-block" data-bs-dismiss="modal"
+                                aria-label="Close">Ok</button>
+                        </div>
+                        {{else}}
                         <div>
                             {{this.errorMessage}}
                         </div>
@@ -33,19 +34,19 @@
                             <label for="formFile" class="form-label">Add to your post</label>
                             <input class="form-control" type="file" id="formFile" {{on "change" this.handleFileChange}}>
                         </div>
-                        <div>
+                        <div class="modal-footer">
                             <button class="btn btn-primary btn-md btn-block" disabled={{this.isLoading}} type="submit">
                                 {{#if this.isLoading}}
-                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                        Loading...
-                        {{else}}
-                        Post
-                        {{/if}}
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                Loading...
+                                {{else}}
+                                Post
+                                {{/if}}
                             </button>
                         </div>
-                    </form>
-                    {{/if}}
-                </div>
+                        {{/if}}
+                    </div>
+                </form>
             </div>
         </div>
     </div>
