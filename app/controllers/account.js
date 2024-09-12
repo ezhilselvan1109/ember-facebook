@@ -10,6 +10,7 @@ export default class AccountController extends Controller {
   @tracked user = [];
   @tracked userPosts = [];
   @tracked accountUser = [];
+  @tracked friend=[];
   @tracked user_id;
 
   @tracked friends = {
@@ -48,9 +49,14 @@ export default class AccountController extends Controller {
         fetch(query, { method: 'GET' }),
         fetch(`http://localhost:8080/facebook/api/post/user/${this.model}/${this.user_id}`, { method: 'GET' })
       ]);
-
+      console.log("friendResponse : ",friendResponse)
       if (friendResponse.status === 'fulfilled') {
         let friendData = await friendResponse.value.json();
+        if(friendResponse.value.ok){
+        this.friend=friendData.data;
+        }else{
+          this.friend=[]
+        }
         console.log('Friend Data: ', friendData);
       } else {
         console.error('Friend request failed: ', friendResponse.reason);
