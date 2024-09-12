@@ -67,7 +67,7 @@ export default class SignupController extends Controller {
 
     try {
       let response = await fetch(
-        'http://localhost:8080/facebook/api/user/create',
+        'http://localhost:8080/facebook/api/user/account',
         {
           method: 'POST',
           headers: {

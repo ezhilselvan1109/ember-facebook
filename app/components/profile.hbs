@@ -1,0 +1,45 @@
+<div class="card my-3">
+    <div class="modal" id="postInputModal" tabindex="-1" aria-labelledby="postInputModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    {{#unless this.isSubmited}}
+                    <div class="d-flex justify-content-center align-item-center">
+                        <h5 class="modal-title" id="postInputModalLabel">Edit Profile Image</h5>
+                    </div>
+                    {{/unless}}
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {{#if this.isSubmited}}
+                    <div class="d-flex flex-column justify-content-center align-item-center">
+                        <h5>Success Fully Updated</h5>
+                        <button type="button" class="btn btn-success btn-md btn-block" data-bs-dismiss="modal" aria-label="Close">Ok</button>
+                    </div>
+                    {{else}}
+                    <form {{on "submit" this.handleSubmit}}>
+                        <div>
+                            {{this.errorMessage}}
+                        </div>
+                        <div class="mb-3">
+                            <label for="formFile" class="form-label">Add to your post</label>
+                            <input class="form-control" type="file" id="formFile" {{on "change" this.handleFileChange}}>
+                        </div>
+                        <div>
+                            <button class="btn btn-primary btn-md btn-block" disabled={{this.isLoading}} type="submit">
+                                {{#if this.isLoading}}
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Loading...
+                        {{else}}
+                        Update
+                        {{/if}}
+                            </button>
+                        </div>
+                    </form>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{yield}}

@@ -33,6 +33,7 @@ export default class LoginController extends Controller {
       return;
     }
     this.isLoading = true;
+    this.errorMessage = '';
     try {
       let response = await fetch(
         `http://localhost:8080/facebook/api/auth/login?username=${this.username}&password=${this.password}`,
@@ -45,7 +46,7 @@ export default class LoginController extends Controller {
         const errorData = await response.json();
         this.errorMessage = errorData.data.join(', ');
       } else {
-        localStorage.setItem('username', this.username);
+        localStorage.setItem('user', this.username);
         this.router.transitionTo('index');
       }
     } catch (error) {

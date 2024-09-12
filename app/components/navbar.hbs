@@ -1,13 +1,19 @@
-<nav class="navbar navbar-light bg-white fixed-top">
+<nav class="navbar navbar-light bg-white fixed-top shadow-sm">
   <div class="d-flex justify-content-around col-md-12">
     <div class="col-md-3 d-flex justify-content-center">
-      <img style="width: 14%;" src="../assets/images/facebook-logo.png" alt="">
+      <img style="width: 14%;" src="/assets/images/facebook-logo.png" alt="">
     </div>
-    <div class="col-md-6 d-flex justify-content-center">
-      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+    <div class="col-md-6 d-flex flex-column justify-content-center">
+      <Search />
     </div>
     <div class="col-md-3 d-flex justify-content-center">
-      <img style="width: 14%;" src="../assets/images/account-icon.png" alt="">
+      <LinkTo @route="account" @model={{@user.id}} class="text-decoration-none">
+        {{#if @user.profile.image}}
+        <img class="avatar" src='data:image/jpeg;base64,{{@user.profile.image}}' alt="">
+        {{else}}
+        <img class="avatar" src="/assets/images/user.png" alt="">
+        {{/if}}
+      </LinkTo>
     </div>
   </div>
 </nav>

@@ -1,27 +1,50 @@
 <div class="card my-3">
-    <div class="card-body">
-        <button type="button" class="btn btn-primary btn-md btn-block" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            Create Post
-        </button>
+    <div class="card-body d-flex justify-content-around">
+        <a type="button" class="btn btn-primary btn-md btn-block" data-bs-toggle="modal"
+            data-bs-target="#postInputModal"> Create Post </a>
     </div>
-    <div class="modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal" id="postInputModal" tabindex="-1" aria-labelledby="postInputModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Create post</h5>
+                    {{#unless this.isSubmited}}
+                    <div class="d-flex justify-content-center align-item-center">
+                        <h5 class="modal-title" id="postInputModalLabel">Create post</h5>
+                    </div>
+                    {{/unless}}
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="mb-3">
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="1"
-                            placeholder="What's on your mind,ezhil?"></textarea>
+                    {{#if this.isSubmited}}
+                    <div class="d-flex flex-column justify-content-center align-item-center">
+                        <h5>Post is Created</h5>
+                        <button type="button" class="btn btn-success btn-md btn-block" data-bs-dismiss="modal" aria-label="Close">Ok</button>
                     </div>
-                    <div class="mb-3">
-                        <label for="formFile" class="form-label">Add to your post</label>
-                        <input class="form-control" type="file" id="formFile">
-                    </div>
-                    <button class="btn btn-primary btn-md btn-block" data-bs-dismiss="modal" type="submit">
-                        Post</button>
+                    {{else}}
+                    <form {{on "submit" this.handleSubmit}}>
+                        <div>
+                            {{this.errorMessage}}
+                        </div>
+                        <div class="mb-3">
+                            <textarea class="form-control" rows="1" placeholder="What's on your mind,ezhil?"
+                                value={{this.description}} {{on "input" this.handleDescriptionChange}}></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="formFile" class="form-label">Add to your post</label>
+                            <input class="form-control" type="file" id="formFile" {{on "change" this.handleFileChange}}>
+                        </div>
+                        <div>
+                            <button class="btn btn-primary btn-md btn-block" disabled={{this.isLoading}} type="submit">
+                                {{#if this.isLoading}}
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Loading...
+                        {{else}}
+                        Post
+                        {{/if}}
+                            </button>
+                        </div>
+                    </form>
+                    {{/if}}
                 </div>
             </div>
         </div>
