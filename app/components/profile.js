@@ -40,6 +40,10 @@ export default class PostInput extends Component {
         this.isSubmited=true;
         let result = await response.json();
         console.log('Success:', result);
+        this.args.loadData();
+        let modalElement = document.getElementById('postInputModal');
+        let modalInstance = bootstrap.Modal.getInstance(modalElement);
+        modalInstance.hide();
       }
       this.file = null;
     } catch (error) {
