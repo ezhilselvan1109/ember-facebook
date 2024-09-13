@@ -1,6 +1,6 @@
-<button class="btn btn-secondary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal" type="button"><i class="bi bi-pencil-square"></i> Edit Profile</button>
-<div class="modal" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
-    tabindex="-1">
+<button class="btn btn-secondary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal" type="button"><i
+        class="bi bi-pencil-square"></i> Edit Profile</button>
+<div class="modal" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -11,7 +11,8 @@
                 <div>
                     <div class="d-flex justify-content-between">
                         <h6>Profile picture</h6>
-                        <button class="btn btn-outline-none" data-bs-target="#image" data-bs-toggle="modal" type="button"><i class="bi bi-pencil-square"></i></button>
+                        <button class="btn btn-outline-none" data-bs-target="#image" data-bs-toggle="modal"
+                            type="button"><i class="bi bi-pencil-square"></i></button>
                     </div>
                     <div class="d-flex align-items-center justify-content-center gap-2">
                         {{#if @accoutDetail.profile.image}}
@@ -25,57 +26,54 @@
                 <div>
                     <div class="d-flex justify-content-between">
                         <h6>Bio</h6>
-                        <button class="btn btn-outline-none" data-bs-target="#bio"
-                            data-bs-toggle="modal" type="button"><i class="bi bi-pencil-square"></i></button>
+                        <button class="btn btn-outline-none" data-bs-target="#bio" data-bs-toggle="modal"
+                            type="button"><i class="bi bi-pencil-square"></i></button>
                     </div>
                     <div class="d-flex align-items-center justify-content-center gap-2">
                         <p>Describe yourself…</p>
                     </div>
                 </div>
-
-                <div>
-                    <div class="d-flex justify-content-between" data-bs-target="#basicInfo" data-bs-toggle="modal">
-                        <h6>Basic Info</h6>
-                        <button class="btn btn-outline-none" type="button"><i class="bi bi-pencil-square"></i></button>
-                    </div>
-                    <div class="d-flex flex-column gap-2 mb-3">
-                        <div>
-                            <i class="bi bi-person-fill"></i> name
-                        </div>
-                        <div>
-                            <i class="bi bi-calendar3"></i> date
-                        </div>
-                    </div>
-                </div>
                 <div>
                     <div class="d-flex justify-content-between">
                         <h6>Customise your Intro</h6>
-                        <button class="btn btn-outline-none" data-bs-target="#intro" data-bs-toggle="modal" type="button"><i class="bi bi-pencil-square"></i></button>
+                        <button class="btn btn-outline-none" data-bs-target="#intro" data-bs-toggle="modal"
+                            type="button"><i class="bi bi-pencil-square"></i></button>
                     </div>
-                    <div class="d-flex flex-column gap-2">
+                    <div class="d-flex flex-column gap-3">
                         <div>
-                            <i class="bi bi-mortarboard-fill"></i> hello
+                            <i class="bi bi-suitcase-lg-fill text-secondary"></i> Trainee at Zoho 2024 to present
                         </div>
                         <div>
-                            <i class="bi bi-house-door-fill"></i> hello
+                            <i class="bi bi-mortarboard-fill text-secondary"></i> Went to Vivekananda Matriculation
+                            Higher Secondary School,Paundamangalam Left in 2017
                         </div>
                         <div>
-                            <i class="bi bi-house-door-fill"></i> hello
+                            <i class="bi bi-house-door-fill text-secondary"></i> Lives in Chennai, India
                         </div>
                         <div>
-                            <i class="bi bi-mortarboard-fill"></i> hello
+                            <i class="bi bi-house-door-fill text-secondary"></i> From Dindigul, Tamil Nadu
                         </div>
                         <div>
-                            <i class="bi bi-geo-alt-fill"></i> hello
+                            <i class="bi bi-mortarboard-fill text-secondary"></i> Single
+                        </div>
+                        <div class="d-flex align-items-center justify-content-start gap-2">
+                            <div>
+                                <i class="bi bi-telephone-fill text-secondary"></i>
+                            </div>
+                            <div>
+                                <p style="margin: 0;">1234567890</p>
+                                <span>Mobile</span>
+                            </div>
                         </div>
                         <div>
-                            <i class="bi bi-heart-fill"></i> hello
+                            <i class="bi bi-heart-fill text-secondary"></i> Single
                         </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-primary" data-bs-target="#image" data-bs-toggle="modal" type="button">Open second modal</button>
+                <button class="btn btn-primary" data-bs-target="#image" data-bs-toggle="modal" type="button">Open second
+                    modal</button>
             </div>
         </div>
     </div>
@@ -91,8 +89,8 @@
                 <input class="form-control" type="file">
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" data-bs-target="#exampleModalToggle"
-                    data-bs-toggle="modal" type="button">Cancel</button>
+                <button class="btn btn-secondary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal"
+                    type="button">Cancel</button>
                 <button class="btn btn-primary" type="button">Save</button>
             </div>
         </div>
@@ -107,43 +105,11 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <textarea class="form-control" rows="1" placeholder="Describe who you are"></textarea>             
+                <textarea class="form-control" rows="1" placeholder="Describe who you are"></textarea>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" data-bs-target="#exampleModalToggle"
-                    data-bs-toggle="modal" type="button">Cancel</button>
-                <button class="btn btn-primary" type="button">Save</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal" id="basicInfo" aria-hidden="true" aria-labelledby="basicInfoModalToggleLabel" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="basicInfoModalToggleLabel">Basic Info</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="d-flex gap-5">
-                    <div class="form-group">
-                        <input type="text" class="form-control form-control-md" placeholder="First Name">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control form-control-md" placeholder="Last Name">
-                    </div>
-                </div>
-                <div class="form-group">
-              <label class="form-check-label" for="gridCheck">
-                DOB
-              </label>
-              <input type="date" class="form-control form-control-md" required>
-            </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" data-bs-target="#exampleModalToggle"
-                    data-bs-toggle="modal" type="button">Cancel</button>
+                <button class="btn btn-secondary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal"
+                    type="button">Cancel</button>
                 <button class="btn btn-primary" type="button">Save</button>
             </div>
         </div>
@@ -158,10 +124,35 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <input class="form-control" type="file">
+                <div>
+                    <div class="d-flex flex-column gap-3">
+                        <div>
+                            <h5>Work</h5>
+                            <div class="d-flex flex-column gap-2">
+                                <p>Former Trainee at Zoho</p>
+                                <p style="margin: 0;">4 April 2023 - 5 April 2024 Chennai, India</p>
+                                <p>asdf</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column gap-3">
+                        <div>
+                            <h5>Education</h5>
+                            <div class="d-flex flex-column gap-2">
+                                <p>Former Trainee at Zoho</p>
+                                <p style="margin: 0;">4 April 2023 - 5 April 2024 Chennai, India</p>
+                                <p>asdf</p>
+                                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile"
+                                type="button" role="tab" aria-controls="profile" aria-selected="false">About</button>
+                        
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal" type="button">Cancel</button>
+                <button class="btn btn-secondary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal"
+                    type="button">Cancel</button>
                 <button class="btn btn-primary" type="button">Save</button>
             </div>
         </div>

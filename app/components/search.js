@@ -25,9 +25,13 @@ export default class Search extends Component {
   clearSearchResults() {
     this.searchResults = [];
     this.searchQuery = '';
+    this.isLoading = false;
   }
 
   debounceSearch(query) {
+    if (query.length > 0) {
+      this.isLoading = true;
+    }
     if (this.debounceTimeout) {
       clearTimeout(this.debounceTimeout);
     }

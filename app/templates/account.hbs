@@ -41,6 +41,10 @@
                             <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact"
                                 type="button" role="tab" aria-controls="contact" aria-selected="false">Friends</button>
                         </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#requests"
+                                type="button" role="tab" aria-controls="requests" aria-selected="false">Friends Requests</button>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -49,12 +53,17 @@
             <div class="col-md-9 px-4">
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                        <Nav::Posts @friend={{this.friend}} @posts={{this.userPosts}}/>
+                        <Nav::Posts @friend={{this.friend}} @posts={{this.userPosts}} />
                     </div>
                     <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                        <Nav::About/>
+                        <Nav::About />
                     </div>
-                    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">Friends</div>
+                    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                        <Nav::Friends @friend={{this.friend}}/>
+                    </div>
+                    <div class="tab-pane fade" id="requests" role="tabpanel" aria-labelledby="requests-tab">
+                        <Nav::Requests @friend={{this.friend}}/>
+                    </div>
                 </div>
             </div>
         </div>
