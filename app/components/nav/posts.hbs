@@ -1,0 +1,47 @@
+<div class="d-flex gap-3 justify-content-between col-md-12">
+    <div class="col-md-6">
+        <div class="card mb-3">
+            <h5 class="card-header">Intro</h5>
+            <div class="card-body">
+                <div class="d-flex justify-content-around col-md-12 pb-2">
+                    <div class="col-md-2">
+                        <img class="avatar" src="/assets/images/user.png" alt="">
+                    </div>
+                    <div class="col-md-2">
+                        <img class="avatar" src="/assets/images/user.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card mb-3">
+            <h5 class="card-header">Friends</h5>
+            <div class="card-body">
+                {{#if @friend}}
+                {{#each @friend as |data|}}
+                <LinkTo @route="account" @model={{data.id}} class="text-decoration-none">
+                    <div class="d-flex justify-content-around align-items-center pb-2">
+                        <div class="col-md-2">
+                            <img class="avatar" src="/assets/images/user.png" alt="">
+                        </div>
+                        <div class="col-md-10">
+                            {{concat data.first_name " " data.last_name}}
+                        </div>
+                    </div>
+
+                </LinkTo>
+                {{/each}}
+                {{else}}
+                <p>no data</p>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        {{#each  @posts.post as |post|}}
+        <Post @id={{@posts.id}} @post_id={{post.id}} @description={{post.description}} @image={{post.image}}
+            @like={{post.like.count}} @isLiked={{post.like.isLiked}} @name={{concat @posts.first_name " "
+            @posts.last_name}} />
+        {{/each}}
+    </div>
+</div>
+{{yield}}

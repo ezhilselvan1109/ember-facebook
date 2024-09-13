@@ -7,9 +7,9 @@ export default class PostInput extends Component {
   @tracked file = null;
   @tracked isLoading = false;
   @service userData;
-  @tracked isSubmited=false;
-  @tracked errorMessage='';
-  
+  @tracked isSubmited = false;
+  @tracked errorMessage = '';
+
   @action
   handleFileChange(event) {
     this.file = event.target.files[0];
@@ -19,13 +19,13 @@ export default class PostInput extends Component {
   async handleSubmit(event) {
     event.preventDefault();
     let formData = new FormData();
-    if(this.file==null){
-      this.errorMessage='Select image';
+    if (this.file == null) {
+      this.errorMessage = 'Select image';
       return;
     }
     this.isLoading = true;
-    this.isSubmited=false;
-    
+    this.isSubmited = false;
+
     formData.append('description', this.description);
     if (this.file) {
       formData.append('image', this.file);
@@ -33,11 +33,14 @@ export default class PostInput extends Component {
     formData.append('user_id', this.userData.user.id);
 
     try {
-      let response = await fetch('http://localhost:8080/facebook/api/user/image',{method: 'POST',body: formData});
+      let response = await fetch(
+        'http://localhost:8080/facebook/api/user/image',
+        { method: 'POST', body: formData },
+      );
       if (!response.ok) {
         throw new Error('Network response was not ok.');
-      }else{
-        this.isSubmited=true;
+      } else {
+        this.isSubmited = true;
         let result = await response.json();
         console.log('Success:', result);
         this.args.loadData();

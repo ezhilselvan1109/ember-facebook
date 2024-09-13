@@ -10,13 +10,13 @@ export default class AccountController extends Controller {
   @tracked user = [];
   @tracked userPosts = [];
   @tracked accountUser = [];
-  @tracked friend=[];
+  @tracked friend = [];
   @tracked user_id;
 
   @tracked friends = {
     isFriend: undefined,
-    requestStatus: undefined
-  }
+    requestStatus: undefined,
+  };
 
   @action
   async loadData() {
@@ -26,7 +26,10 @@ export default class AccountController extends Controller {
     let user = localStorage.getItem('user');
 
     try {
-      let userResponse = await fetch(`http://localhost:8080/facebook/api/user/${user}`, { method: 'GET' });
+      let userResponse = await fetch(
+        `http://localhost:8080/facebook/api/user/${user}`,
+        { method: 'GET' },
+      );
       if (!userResponse.ok) {
         let errorData = await userResponse.json();
         throw new Error(errorData.data.join(', '));
@@ -44,18 +47,25 @@ export default class AccountController extends Controller {
         query = `http://localhost:8080/facebook/api/user/profile/${this.model}?from=${this.user_id}`;
       }
 
-      let [friendResponse, accountResponse, postsResponse] = await Promise.allSettled([
-        fetch(`http://localhost:8080/facebook/api/friend/list?user_id=${this.model}`, { method: 'GET' }),
-        fetch(query, { method: 'GET' }),
-        fetch(`http://localhost:8080/facebook/api/post/user/${this.model}/${this.user_id}`, { method: 'GET' })
-      ]);
-      console.log("friendResponse : ",friendResponse)
+      let [friendResponse, accountResponse, postsResponse] =
+        await Promise.allSettled([
+          fetch(
+            `http://localhost:8080/facebook/api/friend/list?user_id=${this.model}`,
+            { method: 'GET' },
+          ),
+          fetch(query, { method: 'GET' }),
+          fetch(
+            `http://localhost:8080/facebook/api/post/user/${this.model}/${this.user_id}`,
+            { method: 'GET' },
+          ),
+        ]);
+      console.log('friendResponse : ', friendResponse);
       if (friendResponse.status === 'fulfilled') {
         let friendData = await friendResponse.value.json();
-        if(friendResponse.value.ok){
-        this.friend=friendData.data;
-        }else{
-          this.friend=[]
+        if (friendResponse.value.ok) {
+          this.friend = friendData.data;
+        } else {
+          this.friend = [];
         }
         console.log('Friend Data: ', friendData);
       } else {
@@ -81,10 +91,9 @@ export default class AccountController extends Controller {
         console.error('Posts request failed: ', postsResponse.reason);
       }
 
-      console.log("this.friends: ", this.friends);
-
+      console.log('this.friends: ', this.friends);
     } catch (error) {
-      console.log("error: ", error);
+      console.log('error: ', error);
     } finally {
       this.isLoading = false;
     }

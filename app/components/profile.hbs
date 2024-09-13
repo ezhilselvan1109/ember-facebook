@@ -1,4 +1,5 @@
-<div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+<button class="btn btn-secondary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal" type="button"><i class="bi bi-pencil-square"></i> Edit Profile</button>
+<div class="modal" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
     tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -10,8 +11,7 @@
                 <div>
                     <div class="d-flex justify-content-between">
                         <h6>Profile picture</h6>
-                        <button class="btn btn-outline-none" data-bs-target="#image" data-bs-toggle="modal"><i
-                                class="bi bi-pencil-square"></i></button>
+                        <button class="btn btn-outline-none" data-bs-target="#image" data-bs-toggle="modal" type="button"><i class="bi bi-pencil-square"></i></button>
                     </div>
                     <div class="d-flex align-items-center justify-content-center gap-2">
                         {{#if @accoutDetail.profile.image}}
@@ -26,7 +26,7 @@
                     <div class="d-flex justify-content-between">
                         <h6>Bio</h6>
                         <button class="btn btn-outline-none" data-bs-target="#bio"
-                            data-bs-toggle="modal"><i class="bi bi-pencil-square"></i></button>
+                            data-bs-toggle="modal" type="button"><i class="bi bi-pencil-square"></i></button>
                     </div>
                     <div class="d-flex align-items-center justify-content-center gap-2">
                         <p>Describe yourself…</p>
@@ -36,7 +36,7 @@
                 <div>
                     <div class="d-flex justify-content-between" data-bs-target="#basicInfo" data-bs-toggle="modal">
                         <h6>Basic Info</h6>
-                        <button class="btn btn-outline-none"><i class="bi bi-pencil-square"></i></button>
+                        <button class="btn btn-outline-none" type="button"><i class="bi bi-pencil-square"></i></button>
                     </div>
                     <div class="d-flex flex-column gap-2 mb-3">
                         <div>
@@ -50,7 +50,7 @@
                 <div>
                     <div class="d-flex justify-content-between">
                         <h6>Customise your Intro</h6>
-                        <button class="btn btn-outline-none"><i class="bi bi-pencil-square"></i></button>
+                        <button class="btn btn-outline-none" data-bs-target="#intro" data-bs-toggle="modal" type="button"><i class="bi bi-pencil-square"></i></button>
                     </div>
                     <div class="d-flex flex-column gap-2">
                         <div>
@@ -75,15 +75,12 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-primary" data-bs-target="#image" data-bs-toggle="modal">Open second
-                    modal</button>
-                <button class="btn btn-primary" data-bs-target="#basicInfo" data-bs-toggle="modal">Open third
-                    modal</button>
+                <button class="btn btn-primary" data-bs-target="#image" data-bs-toggle="modal" type="button">Open second modal</button>
             </div>
         </div>
     </div>
 </div>
-<div class="modal fade" id="image" aria-hidden="true" aria-labelledby="imageModalToggleLabel" tabindex="-1">
+<div class="modal" id="image" aria-hidden="true" aria-labelledby="imageModalToggleLabel" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -95,14 +92,14 @@
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" data-bs-target="#exampleModalToggle"
-                    data-bs-toggle="modal">Cancel</button>
-                <button class="btn btn-primary">Save</button>
+                    data-bs-toggle="modal" type="button">Cancel</button>
+                <button class="btn btn-primary" type="button">Save</button>
             </div>
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="bio" aria-hidden="true" aria-labelledby="bioModalToggleLabel" tabindex="-1">
+<div class="modal" id="bio" aria-hidden="true" aria-labelledby="bioModalToggleLabel" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -114,14 +111,14 @@
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" data-bs-target="#exampleModalToggle"
-                    data-bs-toggle="modal">Cancel</button>
-                <button class="btn btn-primary">Save</button>
+                    data-bs-toggle="modal" type="button">Cancel</button>
+                <button class="btn btn-primary" type="button">Save</button>
             </div>
         </div>
     </div>
 </div>
-<div class="modal fade" id="basicInfo" aria-hidden="true" aria-labelledby="basicInfoModalToggleLabel"
-    tabindex="-1">
+
+<div class="modal" id="basicInfo" aria-hidden="true" aria-labelledby="basicInfoModalToggleLabel" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -146,11 +143,27 @@
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" data-bs-target="#exampleModalToggle"
-                    data-bs-toggle="modal">Cancel</button>
-                <button class="btn btn-primary">Save</button>
+                    data-bs-toggle="modal" type="button">Cancel</button>
+                <button class="btn btn-primary" type="button">Save</button>
             </div>
         </div>
     </div>
 </div>
-<button class="btn btn-secondary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal"><i
-        class="bi bi-pencil-square"></i> Edit Profile</button>
+
+<div class="modal" id="intro" aria-hidden="true" aria-labelledby="introModalToggleLabel" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="introModalToggleLabel">Edit details</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input class="form-control" type="file">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal" type="button">Cancel</button>
+                <button class="btn btn-primary" type="button">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
