@@ -22,6 +22,6 @@ export default class NavAboutBasicInfo extends Component {
   @action
   submitGender(event) {
     event.preventDefault();
-    console.log("hello",this.gender);
+    console.log('hello', this.gender);
   }
 }

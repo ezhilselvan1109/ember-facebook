@@ -5,19 +5,25 @@ import { tracked } from '@glimmer/tracking';
 
 export default class IndexController extends Controller {
   @service userData;
+  @service session;
   @tracked isLoading = false;
   @tracked postsData;
   @tracked user_id;
+
   async loadData() {
     this.userData.errorMessage = '';
     this.isLoading = true;
     let user = localStorage.getItem('user');
     try {
       let userResponse = await fetch(
-        `http://localhost:8080/facebook/api/user/${user}`,
-        { method: 'GET' },
+        `http://localhost:8080/facebook/api/user/detail?username=${user}`,
+        { method: 'GET', credentials: 'include' },
       );
       if (!userResponse.ok) {
+        if (userResponse.status == 401) {
+          this.session.route();
+          return;
+        }
         let errorData = await userResponse.json();
         throw new Error(errorData.data.join(', '));
       } else {
@@ -27,16 +33,22 @@ export default class IndexController extends Controller {
       }
 
       let postsResponse = await fetch(
-        `http://localhost:8080/facebook/api/post/all/${this.user_id}`,
-        { method: 'GET' },
+        `http://localhost:8080/facebook/api/post/all?id=${this.user_id}`,
+        {
+          method: 'GET',
+          credentials: 'include',
+        }
       );
       if (!postsResponse.ok) {
+        if (postsResponse.status == 401) {
+          this.session.route();
+          return;
+        }
         let errorData = await postsResponse.json();
         throw new Error(errorData.data.join(', '));
       } else {
         let responseData = await postsResponse.json();
         this.postsData = responseData.data;
-        console.log('responseData.data : ', responseData.data);
       }
     } catch (error) {
       console.log('error : ', error);

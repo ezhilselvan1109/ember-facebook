@@ -44,6 +44,10 @@ export default class SignupController extends Controller {
   }
   validateForm() {
     this.errorMessage = '';
+    if(this.firstName=='' || this.lastName=='' || this.email=='' || this.phoneNumber==''|| this.password=='' || this.dateOfBirth==''){
+      this.errorMessage="Fill the Form"
+      return false;
+    }
     return true;
   }
 

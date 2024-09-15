@@ -5,6 +5,7 @@ import { tracked } from '@glimmer/tracking';
 
 export default class Post extends Component {
   @service userData;
+  @service session;
   @tracked isLoading = false;
   @tracked isLiked = this.args.isLiked;
   @tracked totalLikes = this.args.like;
@@ -15,9 +16,14 @@ export default class Post extends Component {
     try {
       let response = await fetch(
         `http://localhost:8080/facebook/api/post/like?user_id=${this.userData.user.id}&post_id=${this.args.post_id}`,
-        { method: 'POST' },
+        { method: 'POST',
+          credentials: 'include' },
       );
       if (!response.ok) {
+        if (response.status == 401) {
+          this.session.route();
+          return;
+        }
         this.isLiked = false;
         throw new Error(`Error: ${response.status}`);
       } else {
@@ -39,15 +45,18 @@ export default class Post extends Component {
     try {
       let response = await fetch(
         `http://localhost:8080/facebook/api/post/unlike?user_id=${this.userData.user.id}&post_id=${this.args.post_id}`,
-        { method: 'DELETE' },
+        { method: 'DELETE',
+          credentials: 'include' },
       );
       if (!response.ok) {
+        if (response.status == 401) {
+          this.session.route();
+          return;
+        }
         this.isLiked = true;
         throw new Error(`Error: ${response.status}`);
       } else {
         this.isLiked = false;
-        let result = await response.json();
-        console.log('Success:', result);
       }
     } catch (error) {
       console.error('Error:', error);

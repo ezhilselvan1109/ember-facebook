@@ -22,6 +22,10 @@ export default class LoginController extends Controller {
 
   validateForm() {
     this.errorMessage = '';
+    if(this.username=='' || this.password==''){
+      this.errorMessage="Fill the Form"
+      return false;
+    }
     return true;
   }
 
@@ -34,14 +38,22 @@ export default class LoginController extends Controller {
     }
     this.isLoading = true;
     this.errorMessage = '';
+    const data = {
+      username: this.username,
+      password: this.password,
+    };
     try {
       let response = await fetch(
-        `http://localhost:8080/facebook/api/auth/login?username=${this.username}&password=${this.password}`,
+        `http://localhost:8080/facebook/api/auth/login`,
         {
-          method: 'GET',
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          credentials: 'include',
+          body: JSON.stringify(data),
         },
       );
-
       if (!response.ok) {
         const errorData = await response.json();
         this.errorMessage = errorData.data.join(', ');

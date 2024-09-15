@@ -16,6 +16,10 @@ export default class PasswordController extends Controller {
 
   validateForm() {
     this.errorMessage = '';
+    if(this.password==''){
+      this.errorMessage="Fill the Form"
+      return false;
+    }
     return true;
   }
 
@@ -26,11 +30,20 @@ export default class PasswordController extends Controller {
       return;
     }
     this.isLoading = true;
+    const data = {
+      id: this.model,
+      password: this.password,
+    };
+
     try {
       let response = await fetch(
-        `http://localhost:8080/facebook/api/auth/changePassword?id=${this.model}&password=${this.password}`,
+        `http://localhost:8080/facebook/api/auth/changePassword`,
         {
-          method: 'GET',
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
         },
       );
 

@@ -5,6 +5,7 @@ import { action } from '@ember/object';
 
 export default class AccountController extends Controller {
   @service userData;
+  @service session;
   @service router;
   @tracked isLoading = false;
   @tracked user = [];
@@ -27,10 +28,14 @@ export default class AccountController extends Controller {
 
     try {
       let userResponse = await fetch(
-        `http://localhost:8080/facebook/api/user/${user}`,
-        { method: 'GET' },
+        `http://localhost:8080/facebook/api/user/detail?username=${user}`,
+        { method: 'GET', credentials: 'include' },
       );
       if (!userResponse.ok) {
+        if (userResponse.status == 401) {
+          this.session.route();
+          return;
+        }
         let errorData = await userResponse.json();
         throw new Error(errorData.data.join(', '));
       } else {
@@ -42,39 +47,44 @@ export default class AccountController extends Controller {
 
       let query;
       if (this.model == this.user_id) {
-        query = `http://localhost:8080/facebook/api/user/profile/${this.model}`;
+        query = `http://localhost:8080/facebook/api/user/profile?id=${this.model}`;
       } else {
-        query = `http://localhost:8080/facebook/api/user/profile/${this.model}?from=${this.user_id}`;
+        query = `http://localhost:8080/facebook/api/user/profile?id=${this.model}&from=${this.user_id}`;
       }
 
       let [friendResponse, accountResponse, postsResponse] =
         await Promise.allSettled([
           fetch(
             `http://localhost:8080/facebook/api/friend/list?user_id=${this.model}`,
-            { method: 'GET' },
+            { method: 'GET', credentials: 'include' }
           ),
-          fetch(query, { method: 'GET' }),
+          fetch(query, { method: 'GET', credentials: 'include' }),
           fetch(
-            `http://localhost:8080/facebook/api/post/user/${this.model}/${this.user_id}`,
-            { method: 'GET' },
+            `http://localhost:8080/facebook/api/post/user?user_id=${this.model}&id=${this.user_id}`,
+            { method: 'GET', credentials: 'include' }
           ),
         ]);
-      console.log('friendResponse : ', friendResponse);
       if (friendResponse.status === 'fulfilled') {
         let friendData = await friendResponse.value.json();
+        if (friendResponse.value.status == 401) {
+          this.session.route();
+          return;
+        }
         if (friendResponse.value.ok) {
           this.friend = friendData.data;
         } else {
           this.friend = [];
         }
-        console.log('Friend Data: ', friendData);
       } else {
         console.error('Friend request failed: ', friendResponse.reason);
       }
 
       if (accountResponse.status === 'fulfilled') {
+        if (accountResponse.value.status == 401) {
+          this.session.route();
+          return;
+        }
         let accountData = await accountResponse.value.json();
-        console.log('Account Data: ', accountData);
         this.accountUser = accountData.data[0];
         if (accountData.data[0].friend) {
           this.friends.isFriend = accountData.data[0].friend.isFriend;
@@ -85,13 +95,15 @@ export default class AccountController extends Controller {
       }
 
       if (postsResponse.status === 'fulfilled') {
+        if (postsResponse.value.status == 401) {
+          this.session.route();
+          return;
+        }
         let postsData = await postsResponse.value.json();
         this.userPosts = postsData.data[0];
       } else {
         console.error('Posts request failed: ', postsResponse.reason);
       }
-
-      console.log('this.friends: ', this.friends);
     } catch (error) {
       console.log('error: ', error);
     } finally {
@@ -99,9 +111,47 @@ export default class AccountController extends Controller {
     }
   }
 
+
   @action
-  logout() {
-    localStorage.removeItem('user');
-    this.router.transitionTo('login');
+  async loadFriend() {
+    let friendResponse = await fetch(
+      `http://localhost:8080/facebook/api/friend/list?user_id=${this.model}`,
+      { method: 'GET', credentials: 'include' },
+    );
+    if (!friendResponse.ok) {
+      if (friendResponse.status == 401) {
+        this.session.route();
+        return;
+      }
+      this.friend = [];
+      let errorData = await friendResponse.json();
+      throw new Error(errorData.data.join(', '));
+    } else {
+      let friendData = await friendResponse.json();
+      this.friend = friendData.data;
+    }
+  }
+
+  @action
+  async logout() {
+    let response = await fetch(
+      `http://localhost:8080/facebook/api/auth/logout`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+      },
+    );
+    if (!response.ok) {
+      let errorData = await response.json();
+      throw new Error(errorData.data.join(', '));
+    } else {
+      localStorage.removeItem('user');
+      this.session.route();
+      let responseData = await response.json();
+      console.log('responseData.data : ', responseData.data);
+    }
   }
 }

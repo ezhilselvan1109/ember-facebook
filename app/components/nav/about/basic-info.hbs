@@ -2,22 +2,7 @@
     <h5>Basic info</h5>
     <div class="d-flex flex-column gap-3">
         <div class="d-flex justify-content-between gap-2">
-            {{#unless this.genderEdit}}
-
-            <div class="d-flex justify-content-between">
-                <div>
-                    <i class="bi bi-person-fill text-secondary"></i>
-                </div>
-                <div>
-                    <p style="margin: 0;">{{this.gender}}</p>
-                    <span>Gender</span>
-                </div>
-
-            </div>
-            <div>
-                <button class="btn btn-outline-none" {{on "click" (fn this.setGenderEdit true)}} type="button"><i class="bi bi-pencil-square"></i></button>
-            </div>
-            {{else}}
+            {{#if this.genderEdit}}
             <form {{on "submit" this.submitGender}} class="d-flex flex-column gap-3 p-3">
                 <div>
                     <select value={{this.gender}} {{on "change" this.updateGender}} class="form-select"
@@ -32,7 +17,22 @@
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
             </form>
-            {{/unless}}
+            {{else}}
+
+            <div class="d-flex justify-content-between">
+                <div>
+                    <i class="bi bi-person-fill text-secondary"></i>
+                </div>
+                <div>
+                    <p style="margin: 0;">{{this.gender}}</p>
+                    <span>Gender</span>
+                </div>
+
+            </div>
+            <div>
+                <button class="btn btn-outline-none" {{on "click" (fn this.setGenderEdit true)}} type="button"><i class="bi bi-pencil-square"></i></button>
+            </div>
+            {{/if}}
         </div>
         <div class="d-flex align-items-center justify-content-start gap-2">
             <div>

@@ -8,7 +8,6 @@ export default class PostInput extends Component {
   @tracked file = null;
   @tracked isLoading = false;
   @service userData;
-  @tracked isSubmited = false;
   @tracked errorMessage = '';
   @action
   handleDescriptionChange(event) {
@@ -22,6 +21,7 @@ export default class PostInput extends Component {
 
   @action
   async handleSubmit(event) {
+    this.errorMessage = '';
     event.preventDefault();
     let formData = new FormData();
     if (this.file == null && this.description == '') {
@@ -40,14 +40,17 @@ export default class PostInput extends Component {
     try {
       let response = await fetch(
         'http://localhost:8080/facebook/api/post/create',
-        { method: 'POST', body: formData },
+        { method: 'POST', body: formData ,
+          credentials: 'include'},
       );
       if (!response.ok) {
-        throw new Error('Network response was not ok.');
+        const errorData = await response.json();
+        this.errorMessage = errorData.data.join(', ');
+        throw new Error('response was not ok.');
       } else {
-        this.isSubmited = true;
-        let result = await response.json();
-        console.log('Success:', result);
+        let modalElement = document.getElementById('postInputModal');
+        let modalInstance = bootstrap.Modal.getInstance(modalElement);
+        modalInstance.hide();
       }
       this.description = '';
       this.file = null;

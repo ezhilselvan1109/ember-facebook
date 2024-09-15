@@ -1,9 +1,11 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
+import { inject as service } from '@ember/service';
 
 export default class Friend extends Component {
   @tracked isLoading = false;
+  @service session;
   @tracked isFriend =
     this.args.friends.isFriend !== undefined
       ? this.args.friends.isFriend
@@ -18,9 +20,16 @@ export default class Friend extends Component {
     try {
       let response = await fetch(
         `http://localhost:8080/facebook/api/friend/request?from=${this.args.user_id}&to=${this.args.id}`,
-        { method: 'POST' },
+        {
+          method: 'POST',
+          credentials: 'include'
+        },
       );
       if (!response.ok) {
+        if (response.status == 401) {
+          this.session.route();
+          return;
+        }
         throw new Error(`Error: ${response.status}`);
       } else {
         this.isFriend = false;
@@ -41,13 +50,21 @@ export default class Friend extends Component {
     try {
       let response = await fetch(
         `http://localhost:8080/facebook/api/friend/accept?from=${this.args.user_id}&to=${this.args.id}`,
-        { method: 'PUT' },
+        {
+          method: 'PUT',
+          credentials: 'include'
+        },
       );
       if (!response.ok) {
+        if (response.status == 401) {
+          this.session.route();
+          return;
+        }
         throw new Error(`Error: ${response.status}`);
       } else {
         this.isFriend = true;
         this.status = true;
+        this.args.loadFriend();
         let result = await response.json();
         console.log('Success:', result);
       }
@@ -62,15 +79,20 @@ export default class Friend extends Component {
   async reject() {
     this.isLoading = true;
     try {
-      let response = await fetch(
-        `http://localhost:8080/facebook/api/friend/reject?from=${this.args.user_id}&to=${this.args.id}`,
-        { method: 'DELETE' },
-      );
+      let response = await fetch(`http://localhost:8080/facebook/api/friend/reject?from=${this.args.user_id}&to=${this.args.id}`, {
+        method: 'DELETE',
+        credentials: 'include'
+      });
       if (!response.ok) {
+        if (response.status == 401) {
+          this.session.route();
+          return;
+        }
         throw new Error(`Error: ${response.status}`);
       } else {
         this.isFriend = undefined;
         this.status = undefined;
+        this.args.loadFriend();
         let result = await response.json();
         console.log('Success:', result);
       }

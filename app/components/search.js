@@ -45,9 +45,11 @@ export default class Search extends Component {
     if (query.length > 0) {
       this.isLoading = true;
       try {
-        let response = await fetch(
-          `http://localhost:8080/facebook/api/user/search?key=${query}&id=${this.userData.user.id}`,
-        );
+        let response = await fetch(`http://localhost:8080/facebook/api/user/search?key=${query}&id=${this.userData.user.id}`,
+          {
+            method: 'GET',
+            credentials: 'include',
+          });
         let results = await response.json();
         console.log('results : ', results);
         this.searchResults = results.data;
