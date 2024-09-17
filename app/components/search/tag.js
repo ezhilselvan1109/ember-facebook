@@ -9,11 +9,7 @@ export default class SearchTag extends Component {
   @tracked searchResults = [];
   @tracked isLoading = false;
   debounceTimeout = null;
-
-  get user_id() {
-    return this.userData.user.id;
-  }
-
+  
   @action
   performSearch(event) {
     this.searchQuery = event.target.value;

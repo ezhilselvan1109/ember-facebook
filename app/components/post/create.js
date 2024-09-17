@@ -35,7 +35,6 @@ export default class PostCreate extends Component {
     if (this.file) {
       formData.append('image', this.file);
     }
-    formData.append('user_id', this.userData.user.id);
 
     try {
       let response = await fetch(

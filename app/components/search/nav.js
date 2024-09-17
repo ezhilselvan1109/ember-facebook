@@ -10,10 +10,6 @@ export default class SearchNav extends Component {
   @tracked isLoading = false;
   debounceTimeout = null;
 
-  get user_id() {
-    return this.userData.user.id;
-  }
-
   @action
   performSearch(event) {
     this.searchQuery = event.target.value;

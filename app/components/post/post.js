@@ -73,7 +73,6 @@ export default class PostPost extends Component {
     }
     this.taged_user=[...this.taged_user, user]; 
     this.taged_id=[...this.taged_id, user.id];
-    console.log("this.taged_id : ",this.taged_id)
   }
 
   @action
