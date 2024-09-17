@@ -24,46 +24,36 @@ export default class AccountController extends Controller {
     this.userPosts = [];
     this.userData.errorMessage = '';
     this.isLoading = true;
-    let user = localStorage.getItem('user');
 
     try {
-      let userResponse = await fetch(
-        `http://localhost:8080/facebook/api/user/detail?username=${user}`,
-        { method: 'GET', credentials: 'include' },
-      );
-      if (!userResponse.ok) {
-        if (userResponse.status == 401) {
+      let from = false;
+      if (this.model == this.user_id) {
+        from = true;
+      } else {
+        from = false;
+      }
+
+      let [userResponse, friendResponse, accountResponse, postsResponse] =
+        await Promise.allSettled([
+          fetch(`http://localhost:8080/facebook/api/user/detail`, { method: 'GET', credentials: 'include' }),
+          fetch(`http://localhost:8080/facebook/api/friend/list?user_id=${this.model}`, { method: 'GET', credentials: 'include' }),
+          fetch(`http://localhost:8080/facebook/api/user/profile?id=${this.model}&from=${from}`, { method: 'GET', credentials: 'include' }),
+          fetch(`http://localhost:8080/facebook/api/post/user?user_id=${this.model}`, { method: 'GET', credentials: 'include' }),
+        ]);
+
+      if (userResponse.status === 'fulfilled') {
+        if (userResponse.value.status == 401) {
           this.session.route();
           return;
         }
-        let errorData = await userResponse.json();
-        throw new Error(errorData.data.join(', '));
+        let userData = await userResponse.value.json();
+        this.user_id = String(userData.data[0].id);
+        this.userData.user = userData.data[0];
+        this.user = userData.data[0];
       } else {
-        let usersData = await userResponse.json();
-        this.user_id = String(usersData.data[0].id);
-        this.userData.user = usersData.data[0];
-        this.user = usersData.data[0];
+        console.error('User request failed: ', userResponse.reason);
       }
 
-      let query;
-      if (this.model == this.user_id) {
-        query = `http://localhost:8080/facebook/api/user/profile?id=${this.model}`;
-      } else {
-        query = `http://localhost:8080/facebook/api/user/profile?id=${this.model}&from=${this.user_id}`;
-      }
-
-      let [friendResponse, accountResponse, postsResponse] =
-        await Promise.allSettled([
-          fetch(
-            `http://localhost:8080/facebook/api/friend/list?user_id=${this.model}`,
-            { method: 'GET', credentials: 'include' },
-          ),
-          fetch(query, { method: 'GET', credentials: 'include' }),
-          fetch(
-            `http://localhost:8080/facebook/api/post/user?user_id=${this.model}&id=${this.user_id}`,
-            { method: 'GET', credentials: 'include' },
-          ),
-        ]);
       if (friendResponse.status === 'fulfilled') {
         let friendData = await friendResponse.value.json();
         if (friendResponse.value.status == 401) {
@@ -113,10 +103,7 @@ export default class AccountController extends Controller {
 
   @action
   async loadFriend() {
-    let friendResponse = await fetch(
-      `http://localhost:8080/facebook/api/friend/list?user_id=${this.model}`,
-      { method: 'GET', credentials: 'include' },
-    );
+    let friendResponse = await fetch(`http://localhost:8080/facebook/api/friend/list?user_id=${this.model}`, { method: 'GET', credentials: 'include' });
     if (!friendResponse.ok) {
       if (friendResponse.status == 401) {
         this.session.route();
@@ -133,15 +120,13 @@ export default class AccountController extends Controller {
 
   @action
   async logout() {
-    let response = await fetch(
-      `http://localhost:8080/facebook/api/auth/logout`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
+    let response = await fetch(`http://localhost:8080/facebook/api/auth/logout`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
       },
+      credentials: 'include',
+    },
     );
     if (!response.ok) {
       let errorData = await response.json();

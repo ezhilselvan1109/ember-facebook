@@ -19,7 +19,7 @@ export default class Friend extends Component {
     this.isLoading = true;
     try {
       let response = await fetch(
-        `http://localhost:8080/facebook/api/friend/request?from=${this.args.user_id}&to=${this.args.id}`,
+        `http://localhost:8080/facebook/api/friend/request?id=${this.args.id}`,
         {
           method: 'POST',
           credentials: 'include',
@@ -49,7 +49,7 @@ export default class Friend extends Component {
     this.isLoading = true;
     try {
       let response = await fetch(
-        `http://localhost:8080/facebook/api/friend/accept?from=${this.args.user_id}&to=${this.args.id}`,
+        `http://localhost:8080/facebook/api/friend/accept?id=${this.args.id}`,
         {
           method: 'PUT',
           credentials: 'include',
@@ -80,7 +80,7 @@ export default class Friend extends Component {
     this.isLoading = true;
     try {
       let response = await fetch(
-        `http://localhost:8080/facebook/api/friend/reject?from=${this.args.user_id}&to=${this.args.id}`,
+        `http://localhost:8080/facebook/api/friend/reject?id=${this.args.id}`,
         {
           method: 'DELETE',
           credentials: 'include',

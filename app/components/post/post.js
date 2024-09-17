@@ -81,7 +81,7 @@ export default class PostPost extends Component {
     this.isLoading = true;
     try {
       let response = await fetch(
-        `http://localhost:8080/facebook/api/post/like?user_id=${this.userData.user.id}&post_id=${this.args.post_id}`,
+        `http://localhost:8080/facebook/api/post/like?post_id=${this.args.post_id}`,
         {
           method: 'POST',
           credentials: 'include',
@@ -112,7 +112,7 @@ export default class PostPost extends Component {
     this.isLoading = true;
     try {
       let response = await fetch(
-        `http://localhost:8080/facebook/api/post/unlike?user_id=${this.userData.user.id}&post_id=${this.args.post_id}`,
+        `http://localhost:8080/facebook/api/post/unlike?post_id=${this.args.post_id}`,
         {
           method: 'DELETE',
           credentials: 'include',
@@ -142,7 +142,6 @@ export default class PostPost extends Component {
     this.isLoading = true;
     const data = {
       post_id: this.args.post_id,
-      id: this.userData.user.id,
       comment: this.comment,
       taged_id: this.taged_id,
     };

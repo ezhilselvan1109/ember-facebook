@@ -50,7 +50,7 @@ export default class SearchNav extends Component {
       this.isLoading = true;
       try {
         let response = await fetch(
-          `http://localhost:8080/facebook/api/user/search?key=${query}&id=${this.userData.user.id}`,
+          `http://localhost:8080/facebook/api/user/search?key=${query}`,
           {
             method: 'GET',
             credentials: 'include',
