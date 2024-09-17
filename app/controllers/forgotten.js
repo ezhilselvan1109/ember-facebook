@@ -16,8 +16,8 @@ export default class ForgottenController extends Controller {
 
   validateForm() {
     this.errorMessage = '';
-    if(this.username==''){
-      this.errorMessage="Fill the Form"
+    if (this.username == '') {
+      this.errorMessage = 'Fill the Form';
       return false;
     }
     return true;

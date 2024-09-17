@@ -7,10 +7,10 @@
     <Navbar @user={{this.userData.user}} />
     <div class="d-flex justify-content-evenly col-md-12" style="margin-top: 4%;">
         <div class="row col-md-4 pb-3">
-            <PostInput />
+            <Post::Create />
             {{#if this.postsData}}
             {{#each this.postsData as |post|}}
-            <Post @id={{post.user.id}} @post_id={{post.id}} @description={{post.description}} @image={{post.image}}
+            <Post::Post @id={{post.user.id}} @post_id={{post.id}} @description={{post.description}} @image={{post.image}}
                 @like={{post.like.count}} @isLiked={{post.like.isLiked}} @name={{concat post.user.first_name " "
                 post.user.last_name}} @pic={{post.user.profile.image}}/>
             {{/each}}

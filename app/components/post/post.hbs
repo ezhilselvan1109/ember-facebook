@@ -1,0 +1,94 @@
+<div class="card mb-3">
+  <div class="card-body">
+    <LinkTo @route="account" @model={{@id}} class="text-decoration-none">
+      <div class="d-flex justify-content-around col-md-12 pb-2">
+        <div class="col-md-2">
+          {{#if @pic}}
+          <img class="avatar" src='data:image/jpeg;base64,{{@pic}}' alt="">
+          {{else}}
+          <img class="avatar" src="/assets/images/user.png" alt="">
+          {{/if}}
+        </div>
+        <div class="col-md-10 d-flex flex-column justify-content-around">
+          <h5>{{@name}}</h5>
+        </div>
+      </div>
+    </LinkTo>
+    <div>
+      <p class="card-text">{{@description}}</p>
+    </div>
+    {{#if @image}}
+    <img class="card-img" src='data:image/jpeg;base64,{{@image}}' alt="Card image cap">
+    {{/if}}
+    <hr class="hr-bottom">
+    <div class="d-flex justify-content-around">
+      <div>
+        {{#if this.isLiked}}
+        <div class="text-align-center">
+          <button type="button" class="btn btn-outline-none" disabled={{this.isLoading}} {{on "click" this.unlikePost}}>
+            <i class="bi bi-hand-thumbs-up-fill" style="color: blue;"></i>You and {{this.likeds}} Others
+          </button>
+        </div>
+        {{else}}
+        <button type="button" class="btn btn-outline-none" disabled={{this.isLoading}} {{on "click" this.likePost}}>
+          <i class="bi bi-hand-thumbs-up"></i>{{this.likeds}} Like
+        </button>
+        {{/if}}
+      </div>
+      <div>
+        <div class="text-align-center">
+          <button type="button" {{on "click" this.handleIsShow}} class="btn btn-outline-none">
+            <i class="bi bi-chat"></i> Comment
+          </button>
+        </div>
+      </div>
+    </div>
+    <hr class="hr-top">
+  </div>
+  {{#if this.isShow}}
+  <div class="card-body">
+    <div class="d-flex justify-content-around col-md-12 pb-2">
+      <div class="col-md-2">
+        {{#if @pic}}
+        <img class="avatar" src='data:image/jpeg;base64,{{@pic}}' alt="">
+        {{else}}
+        <img class="avatar" src="/assets/images/user.png" alt="">
+        {{/if}}
+      </div>
+      <div class="col-md-10 d-flex flex-column justify-content-around">
+        <h5>{{@name}}</h5>
+        <p>helooooo</p>
+      </div>
+    </div>
+    <div class="card">
+      {{#each this.taged_users as |user index|}}
+      <div class="card">
+        <div class="d-flex justify-content-start align-items-center">
+          <p>{{user}}</p>
+          <button class="btn btn-outline-none" {{on "click" (fn this.handleRemoveTag index)}}>
+            <i class="bi bi-x-circle"></i>
+          </button>
+        </div>
+      </div>
+      {{/each}}
+
+      <form {{on "submit" this.handleComment}} class="d-flex">
+        <a class="btn btn-outline-none" {{on "click" this.handleIsTag}}>@</a>
+        {{#if this.isTag}}
+        <Search::Tag @handleTag={{this.handleTags}} />
+        {{else}}
+        <div class="form-group">
+          <input type="text" value={{this.userName}} {{on "input" this.updateComment}}
+            class="form-control form-control-md" placeholder="Comment as {{@name}}">
+        </div>
+        {{/if}}
+        <button class="btn btn-outline-none" disabled={{this.isLoading}} type="submit"><i
+            class="bi bi-send-fill"></i></button>
+      </form>
+    </div>
+  </div>
+  {{/if}}
+</div>
+
+
+{{yield}}

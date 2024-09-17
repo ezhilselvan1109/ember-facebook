@@ -3,7 +3,7 @@ import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 
-export default class Search extends Component {
+export default class SearchTag extends Component {
   @service userData;
   @tracked searchQuery = '';
   @tracked searchResults = [];
@@ -22,7 +22,8 @@ export default class Search extends Component {
   }
 
   @action
-  clearSearchResults() {
+  clearSearchResults(result) {
+    this.args.handleTag(result);
     this.searchResults = [];
     this.searchQuery = '';
     this.isLoading = false;
@@ -45,13 +46,14 @@ export default class Search extends Component {
     if (query.length > 0) {
       this.isLoading = true;
       try {
-        let response = await fetch(`http://localhost:8080/facebook/api/user/search?key=${query}&id=${this.userData.user.id}`,
+        let response = await fetch(
+          `http://localhost:8080/facebook/api/user/search?key=${query}&id=${this.userData.user.id}`,
           {
             method: 'GET',
             credentials: 'include',
-          });
+          },
+        );
         let results = await response.json();
-        console.log('results : ', results);
         this.searchResults = results.data;
       } catch (error) {
         console.error('Error fetching search results:', error);

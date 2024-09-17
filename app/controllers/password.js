@@ -16,8 +16,8 @@ export default class PasswordController extends Controller {
 
   validateForm() {
     this.errorMessage = '';
-    if(this.password==''){
-      this.errorMessage="Fill the Form"
+    if (this.password == '') {
+      this.errorMessage = 'Fill the Form';
       return false;
     }
     return true;

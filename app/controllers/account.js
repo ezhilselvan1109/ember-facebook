@@ -56,12 +56,12 @@ export default class AccountController extends Controller {
         await Promise.allSettled([
           fetch(
             `http://localhost:8080/facebook/api/friend/list?user_id=${this.model}`,
-            { method: 'GET', credentials: 'include' }
+            { method: 'GET', credentials: 'include' },
           ),
           fetch(query, { method: 'GET', credentials: 'include' }),
           fetch(
             `http://localhost:8080/facebook/api/post/user?user_id=${this.model}&id=${this.user_id}`,
-            { method: 'GET', credentials: 'include' }
+            { method: 'GET', credentials: 'include' },
           ),
         ]);
       if (friendResponse.status === 'fulfilled') {
@@ -110,7 +110,6 @@ export default class AccountController extends Controller {
       this.isLoading = false;
     }
   }
-
 
   @action
   async loadFriend() {

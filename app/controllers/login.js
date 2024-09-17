@@ -22,8 +22,8 @@ export default class LoginController extends Controller {
 
   validateForm() {
     this.errorMessage = '';
-    if(this.username=='' || this.password==''){
-      this.errorMessage="Fill the Form"
+    if (this.username == '' || this.password == '') {
+      this.errorMessage = 'Fill the Form';
       return false;
     }
     return true;

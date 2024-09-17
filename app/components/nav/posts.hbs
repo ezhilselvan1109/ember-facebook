@@ -63,7 +63,7 @@
     </div>
     <div class="col-md-6">
         {{#each @posts.post as |post|}}
-        <Post @id={{@posts.id}} @post_id={{post.id}} @description={{post.description}} @image={{post.image}}
+        <Post::Post @id={{@posts.id}} @post_id={{post.id}} @description={{post.description}} @image={{post.image}}
             @like={{post.like.count}} @isLiked={{post.like.isLiked}} @name={{concat @posts.first_name " "
             @posts.last_name}} @pic={{@posts.profile.image}}/>
         {{/each}}

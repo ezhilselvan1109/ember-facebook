@@ -22,7 +22,7 @@ export default class Friend extends Component {
         `http://localhost:8080/facebook/api/friend/request?from=${this.args.user_id}&to=${this.args.id}`,
         {
           method: 'POST',
-          credentials: 'include'
+          credentials: 'include',
         },
       );
       if (!response.ok) {
@@ -52,7 +52,7 @@ export default class Friend extends Component {
         `http://localhost:8080/facebook/api/friend/accept?from=${this.args.user_id}&to=${this.args.id}`,
         {
           method: 'PUT',
-          credentials: 'include'
+          credentials: 'include',
         },
       );
       if (!response.ok) {
@@ -79,10 +79,13 @@ export default class Friend extends Component {
   async reject() {
     this.isLoading = true;
     try {
-      let response = await fetch(`http://localhost:8080/facebook/api/friend/reject?from=${this.args.user_id}&to=${this.args.id}`, {
-        method: 'DELETE',
-        credentials: 'include'
-      });
+      let response = await fetch(
+        `http://localhost:8080/facebook/api/friend/reject?from=${this.args.user_id}&to=${this.args.id}`,
+        {
+          method: 'DELETE',
+          credentials: 'include',
+        },
+      );
       if (!response.ok) {
         if (response.status == 401) {
           this.session.route();

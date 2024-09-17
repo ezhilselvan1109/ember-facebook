@@ -37,7 +37,7 @@ export default class IndexController extends Controller {
         {
           method: 'GET',
           credentials: 'include',
-        }
+        },
       );
       if (!postsResponse.ok) {
         if (postsResponse.status == 401) {

@@ -5,7 +5,7 @@ import { inject as service } from '@ember/service';
 export default class SessionService extends Service {
   @service router;
 
-  route(){
+  route() {
     this.router.transitionTo('login');
   }
 }

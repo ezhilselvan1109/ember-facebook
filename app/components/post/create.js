@@ -3,7 +3,7 @@ import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 
-export default class PostInput extends Component {
+export default class PostCreate extends Component {
   @tracked description = '';
   @tracked file = null;
   @tracked isLoading = false;
@@ -40,8 +40,7 @@ export default class PostInput extends Component {
     try {
       let response = await fetch(
         'http://localhost:8080/facebook/api/post/create',
-        { method: 'POST', body: formData ,
-          credentials: 'include'},
+        { method: 'POST', body: formData, credentials: 'include' },
       );
       if (!response.ok) {
         const errorData = await response.json();

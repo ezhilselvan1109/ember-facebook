@@ -3,7 +3,7 @@ import { inject as service } from '@ember/service';
 
 export default class ApplicationRoute extends Route {
   @service router;
-  
+
   beforeModel(transition) {
     let user = localStorage.getItem('user');
     if (!user) {
