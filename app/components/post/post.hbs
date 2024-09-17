@@ -47,42 +47,63 @@
   </div>
   {{#if this.isShow}}
   <div class="card-body">
+    {{#if this.commentLoading}}
+    <div class="d-flex justify-content-center">
+      <div class="spinner-grow text-primary" role="status"></div>
+    </div>
+    {{else}}
+    {{#each this.postComment as |comment index|}}
     <div class="d-flex justify-content-around col-md-12 pb-2">
       <div class="col-md-2">
-        {{#if @pic}}
-        <img class="avatar" src='data:image/jpeg;base64,{{@pic}}' alt="">
+        {{#if comment.user.profile.image}}
+        <img class="avatar" src='data:image/jpeg;base64,{{comment.user.profile.image}}' alt="">
         {{else}}
         <img class="avatar" src="/assets/images/user.png" alt="">
         {{/if}}
       </div>
       <div class="col-md-10 d-flex flex-column justify-content-around">
-        <h5>{{@name}}</h5>
-        <p>helooooo</p>
+        <h5>{{concat comment.user.first_name " " comment.user.last_name}}</h5>
+        <p>{{comment.comment}}</p>
+        <div class="col-md-12">
+          {{#each comment.tag as |user index|}}
+          <div class="col-md-4 border border-primary rounded px-1">
+            <div class="d-flex justify-content-start align-items-center">
+              <p style="margin-bottom: 0;">{{concat user.first_name " " user.last_name}}</p>
+            </div>
+          </div>
+          {{/each}}
+        </div>
       </div>
     </div>
+    {{/each}}
+    {{/if}}
     <div class="card">
-      {{#each this.taged_users as |user index|}}
-      <div class="card">
+      <div class="col-md-12">
+      {{#each this.taged_user as |user index|}}
+      <div class="col-md-4 border border-primary rounded px-1">
         <div class="d-flex justify-content-start align-items-center">
-          <p>{{user}}</p>
+          <p style="margin-bottom: 0;">{{concat user.first_name " " user.last_name}}</p>
           <button class="btn btn-outline-none" {{on "click" (fn this.handleRemoveTag index)}}>
             <i class="bi bi-x-circle"></i>
           </button>
         </div>
       </div>
       {{/each}}
+      </div>
 
-      <form {{on "submit" this.handleComment}} class="d-flex">
-        <a class="btn btn-outline-none" {{on "click" this.handleIsTag}}>@</a>
+      <form {{on "submit" this.handleComment}} class="d-flex justify-content-center align-items-center col-md-12">
+        <a class="btn btn-outline-none col-md-2" {{on "click" this.handleIsTag}}>@</a>
+        <div class="col-md-8">
         {{#if this.isTag}}
         <Search::Tag @handleTag={{this.handleTags}} />
         {{else}}
         <div class="form-group">
-          <input type="text" value={{this.userName}} {{on "input" this.updateComment}}
+          <input type="text" value={{this.comment}} {{on "input" this.updateComment}}
             class="form-control form-control-md" placeholder="Comment as {{@name}}">
         </div>
         {{/if}}
-        <button class="btn btn-outline-none" disabled={{this.isLoading}} type="submit"><i
+        </div>
+        <button class="btn btn-outline-none col-md-2" disabled={{this.isLoading}} type="submit"><i
             class="bi bi-send-fill"></i></button>
       </form>
     </div>

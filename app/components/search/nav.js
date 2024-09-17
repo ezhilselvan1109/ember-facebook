@@ -29,6 +29,10 @@ export default class SearchNav extends Component {
   }
 
   debounceSearch(query) {
+    if(query===''){
+      this.isLoading = false;
+      return;
+    }
     if (query.length > 0) {
       this.isLoading = true;
     }
