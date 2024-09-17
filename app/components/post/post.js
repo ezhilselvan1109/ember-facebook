@@ -13,11 +13,11 @@ export default class PostPost extends Component {
   @tracked comment = '';
   @tracked taged_id = [];
   @tracked taged_user = [];
-  @tracked isTag=false;
-  @tracked post_id=this.args.post_id;
-  @tracked isShow=false;
-  @tracked postComment=[];
-  @tracked commentLoading=false;
+  @tracked isTag = false;
+  @tracked post_id = this.args.post_id;
+  @tracked isShow = false;
+  @tracked postComment = [];
+  @tracked commentLoading = false;
 
   @action
   handleIsTag() {
@@ -27,12 +27,13 @@ export default class PostPost extends Component {
   @action
   async handleIsShow() {
     this.isShow = !this.isShow;
-    if(!this.isShow){
+    if (!this.isShow) {
       return;
     }
     this.commentLoading = true;
     try {
-      let response = await fetch(`http://localhost:8080/facebook/api/comment/list?id=${this.args.post_id}`,
+      let response = await fetch(
+        `http://localhost:8080/facebook/api/comment/list?id=${this.args.post_id}`,
         {
           method: 'GET',
           credentials: 'include',
@@ -46,7 +47,7 @@ export default class PostPost extends Component {
         throw new Error(`Error: ${response.status}`);
       } else {
         let result = await response.json();
-        this.postComment=[...result.data];
+        this.postComment = [...result.data];
       }
     } catch (error) {
       console.error('Error:', error);
@@ -56,8 +57,8 @@ export default class PostPost extends Component {
   }
 
   @action
-  handleRemoveTag(idx){
-    this.taged_id=this.taged_id.filter((_, i) => i !== idx);
+  handleRemoveTag(idx) {
+    this.taged_id = this.taged_id.filter((_, i) => i !== idx);
     this.taged_user = this.taged_user.filter((_, i) => i !== idx);
   }
 
@@ -68,11 +69,11 @@ export default class PostPost extends Component {
 
   @action
   handleTags(user) {
-    if(this.taged_id.includes(user.id)){
+    if (this.taged_id.includes(user.id)) {
       return;
     }
-    this.taged_user=[...this.taged_user, user]; 
-    this.taged_id=[...this.taged_id, user.id];
+    this.taged_user = [...this.taged_user, user];
+    this.taged_id = [...this.taged_id, user.id];
   }
 
   @action
@@ -137,7 +138,7 @@ export default class PostPost extends Component {
   @action
   async handleComment(event) {
     event.preventDefault();
-    if(this.comment=='' || this.taged_id.length==0)return;
+    if (this.comment == '' || this.taged_id.length == 0) return;
     this.isLoading = true;
     const data = {
       post_id: this.args.post_id,
@@ -145,11 +146,11 @@ export default class PostPost extends Component {
       taged_id: this.taged_id,
     };
 
-    const comment={
-      user:this.userData.user,
-      comment:this.comment,
-      tag:this.taged_user
-    }
+    const comment = {
+      user: this.userData.user,
+      comment: this.comment,
+      tag: this.taged_user,
+    };
 
     try {
       let response = await fetch(
@@ -167,10 +168,10 @@ export default class PostPost extends Component {
         const errorData = await response.json();
         this.errorMessage = errorData.data.join(', ');
       } else {
-        this.comment='';
-        this.taged_id=[];
-        this.taged_user=[];
-        this.postComment=[...this.postComment,comment];
+        this.comment = '';
+        this.taged_id = [];
+        this.taged_user = [];
+        this.postComment = [...this.postComment, comment];
       }
     } catch (error) {
       console.log('Error : ' + error);

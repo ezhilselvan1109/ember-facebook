@@ -10,9 +10,15 @@
     <ul>
       {{#each this.searchResults as |result|}}
       <div>
+        {{#if @handleTag}}
         <a class="text-decoration-none" {{on "click" (fn this.clearSearchResults result) }}>
           {{concat result.first_name " " result.last_name}}
         </a>
+        {{else}}
+        <LinkTo @route="account" @model={{result.id}} class="text-decoration-none" {{on "click" this.clearSearchResults}}>
+          {{concat result.first_name " " result.last_name}}
+        </LinkTo>
+        {{/if}}
       </div>
       {{/each}}
     </ul>

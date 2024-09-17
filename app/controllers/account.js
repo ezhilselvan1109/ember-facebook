@@ -35,10 +35,22 @@ export default class AccountController extends Controller {
 
       let [userResponse, friendResponse, accountResponse, postsResponse] =
         await Promise.allSettled([
-          fetch(`http://localhost:8080/facebook/api/user/detail`, { method: 'GET', credentials: 'include' }),
-          fetch(`http://localhost:8080/facebook/api/friend/list?user_id=${this.model}`, { method: 'GET', credentials: 'include' }),
-          fetch(`http://localhost:8080/facebook/api/user/profile?id=${this.model}&from=${from}`, { method: 'GET', credentials: 'include' }),
-          fetch(`http://localhost:8080/facebook/api/post/user?user_id=${this.model}`, { method: 'GET', credentials: 'include' }),
+          fetch(`http://localhost:8080/facebook/api/user/detail`, {
+            method: 'GET',
+            credentials: 'include',
+          }),
+          fetch(
+            `http://localhost:8080/facebook/api/friend/list?user_id=${this.model}`,
+            { method: 'GET', credentials: 'include' },
+          ),
+          fetch(
+            `http://localhost:8080/facebook/api/user/profile?id=${this.model}&from=${from}`,
+            { method: 'GET', credentials: 'include' },
+          ),
+          fetch(
+            `http://localhost:8080/facebook/api/post/user?user_id=${this.model}`,
+            { method: 'GET', credentials: 'include' },
+          ),
         ]);
 
       if (userResponse.status === 'fulfilled') {
@@ -103,7 +115,10 @@ export default class AccountController extends Controller {
 
   @action
   async loadFriend() {
-    let friendResponse = await fetch(`http://localhost:8080/facebook/api/friend/list?user_id=${this.model}`, { method: 'GET', credentials: 'include' });
+    let friendResponse = await fetch(
+      `http://localhost:8080/facebook/api/friend/list?user_id=${this.model}`,
+      { method: 'GET', credentials: 'include' },
+    );
     if (!friendResponse.ok) {
       if (friendResponse.status == 401) {
         this.session.route();
@@ -120,13 +135,15 @@ export default class AccountController extends Controller {
 
   @action
   async logout() {
-    let response = await fetch(`http://localhost:8080/facebook/api/auth/logout`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
+    let response = await fetch(
+      `http://localhost:8080/facebook/api/auth/logout`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
       },
-      credentials: 'include',
-    },
     );
     if (!response.ok) {
       let errorData = await response.json();

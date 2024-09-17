@@ -83,7 +83,7 @@
       <div class="col-md-4 border border-primary rounded px-1">
         <div class="d-flex justify-content-start align-items-center">
           <p style="margin-bottom: 0;">{{concat user.first_name " " user.last_name}}</p>
-          <button class="btn btn-outline-none" {{on "click" (fn this.handleRemoveTag index)}}>
+          <button class="btn btn-outline-none" type="button" {{on "click" (fn this.handleRemoveTag index)}}>
             <i class="bi bi-x-circle"></i>
           </button>
         </div>
@@ -95,7 +95,7 @@
         <a class="btn btn-outline-none col-md-2" {{on "click" this.handleIsTag}}>@</a>
         <div class="col-md-8">
         {{#if this.isTag}}
-        <Search::Tag @handleTag={{this.handleTags}} />
+        <Search::Search @handleTag={{this.handleTags}} />
         {{else}}
         <div class="form-group">
           <input type="text" value={{this.comment}} {{on "input" this.updateComment}}

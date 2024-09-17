@@ -59,7 +59,6 @@ export default class IndexController extends Controller {
       } else {
         console.log('Failed to fetch posts: ', postsResult.reason);
       }
-
     } catch (error) {
       console.log('error: ', error);
     } finally {
