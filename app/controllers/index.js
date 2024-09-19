@@ -8,6 +8,7 @@ export default class IndexController extends Controller {
   @tracked isLoading = false;
   @tracked postsData;
   @tracked user_id;
+  @service websocket;
 
   async loadData() {
     this.userData.errorMessage = '';
@@ -38,6 +39,7 @@ export default class IndexController extends Controller {
           let responseData = await userResponse.json();
           this.userData.user = responseData.data[0];
           this.user_id = responseData.data[0].id;
+          this.websocket.connect(this.user_id);
         }
       } else {
         console.log('Failed to fetch user details: ', userResult.reason);

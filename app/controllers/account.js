@@ -13,7 +13,8 @@ export default class AccountController extends Controller {
   @tracked accountUser = [];
   @tracked friend = [];
   @tracked user_id;
-
+  @service websocket;
+  
   @tracked friends = {
     isFriend: undefined,
     requestStatus: undefined,
@@ -60,6 +61,7 @@ export default class AccountController extends Controller {
         }
         let userData = await userResponse.value.json();
         this.user_id = String(userData.data[0].id);
+        this.websocket.connect(this.user_id);
         this.userData.user = userData.data[0];
         this.user = userData.data[0];
       } else {
