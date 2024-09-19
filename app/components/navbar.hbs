@@ -6,7 +6,10 @@
     <div class="col-md-6 d-flex flex-column justify-content-center">
       <Search::Search />
     </div>
-    <div class="col-md-3 d-flex justify-content-center">
+    <div class="col-md-1 d-flex flex-column justify-content-center align-items-center">
+      <Notification::Websocket/>
+    </div>
+    <div class="col-md-2 d-flex justify-content-center">
       <LinkTo @route="account" @model={{@user.id}} class="text-decoration-none">
         {{#if @user.profile.image}}
         <img class="avatar" src='data:image/jpeg;base64,{{@user.profile.image}}' alt="">

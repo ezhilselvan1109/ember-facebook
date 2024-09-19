@@ -6,6 +6,7 @@ import { tracked } from '@glimmer/tracking';
 export default class PostPost extends Component {
   @service userData;
   @service session;
+  @service websocket;
   @tracked isLoading = false;
   @tracked isLiked = this.args.isLiked;
   @tracked totalLikes = this.args.like;
@@ -138,7 +139,7 @@ export default class PostPost extends Component {
   @action
   async handleComment(event) {
     event.preventDefault();
-    if (this.comment == '' || this.taged_id.length == 0) return;
+    if (this.comment.length == 0 && this.taged_id.length == 0) return;
     this.isLoading = true;
     const data = {
       post_id: this.args.post_id,
