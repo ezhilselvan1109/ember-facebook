@@ -3,22 +3,22 @@ import { setupRenderingTest } from 'facebook/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 
-module('Integration | Component | notification/websocket', function (hooks) {
+module('Integration | Component | notification/index', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function (assert) {
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.set('myAction', function(val) { ... });
 
-    await render(hbs`<Notification::Websocket />`);
+    await render(hbs`<Notification::Index />`);
 
     assert.dom().hasText('');
 
     // Template block usage:
     await render(hbs`
-      <Notification::Websocket>
+      <Notification::Index>
         template block text
-      </Notification::Websocket>
+      </Notification::Index>
     `);
 
     assert.dom().hasText('template block text');
