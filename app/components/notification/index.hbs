@@ -2,9 +2,15 @@
     <button class="btn btn-outline-none" {{on "click" this.handleIsShow}}><i class="bi bi-bell"></i></button>
     {{#if this.isShow}}
     <div class="card p-2" style="position: absolute;z-index: 10; width:20%">
+        {{#if this.websocket.data}}
         {{#each this.websocket.data as |data|}}
         <p>{{data.comment}}</p>
         {{/each}}
+        {{else}}
+        <div class="d-flex align-items-center justify-content-center">
+        <p>No Data</p>
+        </div>
+        {{/if}}
     </div>
     {{/if}}
 </div>

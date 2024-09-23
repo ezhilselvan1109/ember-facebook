@@ -7,6 +7,7 @@ export default class AccountController extends Controller {
   @service userData;
   @service session;
   @service router;
+  @service websocket;
   @tracked isLoading = false;
   @tracked user = [];
   @tracked userPosts = [];
@@ -151,10 +152,9 @@ export default class AccountController extends Controller {
       let errorData = await response.json();
       throw new Error(errorData.data.join(', '));
     } else {
+      this.websocket.close();
       localStorage.removeItem('user');
       this.session.route();
-      let responseData = await response.json();
-      console.log('responseData.data : ', responseData.data);
     }
   }
 }
