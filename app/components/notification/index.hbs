@@ -4,11 +4,28 @@
     <div class="card p-2" style="position: absolute;z-index: 10; width:20%">
         {{#if this.websocket.data}}
         {{#each this.websocket.data as |data|}}
-        <p>{{data.comment}}</p>
+        <div class="d-flex justify-content-around col-md-12 pb-2">
+            {{#each data.user as |user|}}
+            <div class="d-flex justify-content-center align-items-center col-md-2">
+                {{#if user.profile.image}}
+                <img class="avatar" style="width: 90%;" src='data:image/jpeg;base64,{{user.profile.image}}' alt="">
+                {{else}}
+                <img class="avatar" style="width: 90%; height: auto;" src="/assets/images/user.png" alt="">
+                {{/if}}
+            </div>
+            <div class="col-md-10 d-flex justify-content-center">
+                <p style="margin: 0;"><b>{{concat user.first_name " " user.last_name}}</b> {{data.comment}}
+                {{!-- {{#each data.tag as |tag|}}
+                <b>{{concat tag.first_name " " tag.last_name}}</b>
+                {{/each}} --}}
+                </p>
+            </div>
+            {{/each}}
+        </div>
         {{/each}}
         {{else}}
         <div class="d-flex align-items-center justify-content-center">
-        <p>No Data</p>
+            <p>No Data</p>
         </div>
         {{/if}}
     </div>
