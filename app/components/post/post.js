@@ -9,7 +9,7 @@ export default class PostPost extends Component {
   @service websocket;
   @tracked isLoading = false;
   @tracked isLiked = this.args.isLiked;
-  @tracked totalLikes = this.args.like;
+  @tracked totalLikes = this.args.like??0;
   @tracked likeds = this.args.isLiked ? this.args.like - 1 : this.args.like;
   @tracked comment = '';
   @tracked taged_id = [];
@@ -97,9 +97,7 @@ export default class PostPost extends Component {
         throw new Error(`Error: ${response.status}`);
       } else {
         this.isLiked = true;
-        this.likeds = totalLikes - 1;
-        let result = await response.json();
-        console.log('Success:', result);
+        this.likeds = this.totalLikes?this.totalLikes - 1:0;
       }
     } catch (error) {
       console.error('Error:', error);
