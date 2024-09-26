@@ -25,17 +25,14 @@ export default class PostInput extends Component {
     }
     this.isLoading = true;
     this.isSubmited = false;
-
-    formData.append('description', this.description);
     if (this.file) {
       formData.append('image', this.file);
     }
-    formData.append('user_id', this.userData.user.id);
 
     try {
       let response = await fetch(
         'http://localhost:8080/facebook/api/user/image',
-        { method: 'POST', body: formData },
+        { method: 'POST', body: formData, credentials: 'include' },
       );
       if (!response.ok) {
         throw new Error('Network response was not ok.');
@@ -44,9 +41,12 @@ export default class PostInput extends Component {
         let result = await response.json();
         console.log('Success:', result);
         this.args.loadData();
-        let modalElement = document.getElementById('postInputModal');
+        let modalElement = document.getElementById('image');
         let modalInstance = bootstrap.Modal.getInstance(modalElement);
         modalInstance.hide();
+        let exampleModalToggleElement = document.getElementById('exampleModalToggle');
+        let exampleModalToggleInstance = bootstrap.Modal.getInstance(exampleModalToggleElement);
+        exampleModalToggleInstance.hide();
       }
       this.file = null;
     } catch (error) {

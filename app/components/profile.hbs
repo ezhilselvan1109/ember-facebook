@@ -85,14 +85,23 @@
                 <h1 class="modal-title fs-5" id="imageModalToggleLabel">Choose profile picture</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <input class="form-control" type="file">
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal"
-                    type="button">Cancel</button>
-                <button class="btn btn-primary" type="button">Save</button>
-            </div>
+            <form {{on "submit" this.handleSubmit}} class="d-flex flex-column gap-3 p-3">
+                <div class="modal-body">
+                    <input class="form-control" type="file" id="formFile" {{on "change" this.handleFileChange}}>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal"
+                        type="button">Cancel</button>
+                    <button class="btn btn-primary" disabled={{this.isLoading}} type="submit">
+                        {{#if this.isLoading}}
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Loading...
+                        {{else}}
+                        Save
+                        {{/if}}
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -143,8 +152,9 @@
                                 <p style="margin: 0;">4 April 2023 - 5 April 2024 Chennai, India</p>
                                 <p>asdf</p>
                                 <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile"
-                                type="button" role="tab" aria-controls="profile" aria-selected="false">About</button>
-                        
+                                    type="button" role="tab" aria-controls="profile"
+                                    aria-selected="false">About</button>
+
                             </div>
                         </div>
                     </div>
