@@ -26,18 +26,28 @@ export default class WebsocketService extends Service {
   async onMessage(event) {
     let arr = [JSON.parse(event.data)];
     this.data = [...this.data, ...arr];
-    const notification={
-        title:arr[0].user[0].first_name+" "+arr[0].user[0].last_name,
-        body:arr[0].comment
+    let tag = ''
+    if (arr[0].tag) {
+      const size = arr[0].tag.length;
+      arr[0].tag.forEach((user, index) => {
+        tag += user.first_name + " " + user.last_name
+        if (index !== size - 1) {
+          tag += ', '
+        } else if (arr[0].comment) {
+          tag += ' '
+        }
+      });
+    }
+    const notification = {
+      title: arr[0].user[0].first_name + " " + arr[0].user[0].last_name,
+      body: arr[0].message + (arr[0].comment || tag ? ": " : '') + tag + (arr[0].comment ? tag ? 'comment: ' + arr[0].comment : arr[0].comment : '')
     }
     let permission = Notification.permission;
     if (permission === "granted") {
-        this.showNotification(notification);
-      } else if (permission === "default") {
-        await this.requestAndShowPermission(notification);
-      } else {
-        alert("Notification permission denied. Using normal alert instead.");
-      }
+      this.showNotification(notification);
+    } else if (permission === "default") {
+      await this.requestAndShowPermission(notification);
+    }
   }
 
   async requestAndShowPermission(notification) {

@@ -13,11 +13,12 @@
                 <img class="avatar" style="width: 90%; height: auto;" src="/assets/images/user.png" alt="">
                 {{/if}}
             </div>
-            <div class="col-md-10 d-flex justify-content-center">
-                <p style="margin: 0;"><b>{{concat user.first_name " " user.last_name}}</b> {{data.comment}}
-                {{!-- {{#each data.tag as |tag|}}
-                <b>{{concat tag.first_name " " tag.last_name}}</b>
-                {{/each}} --}}
+            <div class="col-md-10 d-flex">
+                <p style="margin: 0;"><b>{{concat user.first_name " " user.last_name}}</b> {{data.message}}
+                {{#each data.tag as |tag|}}
+                <b style="border: 2px solid blue;border-radius:5px" class="px-1">{{concat tag.first_name " " tag.last_name}}</b>
+                {{/each}}
+                {{data.comment}}
                 </p>
             </div>
             {{/each}}

@@ -8,6 +8,7 @@ export default class PostPost extends Component {
   @service session;
   @service websocket;
   @tracked isLoading = false;
+  @tracked isLike=this.args.isLiked;
   @tracked isLiked = this.args.isLiked;
   @tracked totalLikes = this.args.like??0;
   @tracked likeds = this.args.isLiked ? this.args.like - 1 : this.args.like;
@@ -97,7 +98,7 @@ export default class PostPost extends Component {
         throw new Error(`Error: ${response.status}`);
       } else {
         this.isLiked = true;
-        this.likeds = this.totalLikes?this.totalLikes - 1:0;
+        this.likeds = this.isLike ?(this.totalLikes===0?0:this.totalLikes - 1):this.totalLikes;
       }
     } catch (error) {
       console.error('Error:', error);
